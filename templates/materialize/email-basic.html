@@ -1,0 +1,11 @@
+{% load crispy_forms_field %}
+
+{% if field.is_hidden %}
+    {{ field }}
+{% else %}
+    <div class="input-field {{ field.classes }}">
+        <input id="id_{% if field.id %}{{ field.id }}{% else %}email{% endif %}" value=""  
+               type="{% if field.type %}{{ field.type}}{% else %}email{% endif %}" class="validate {{ field.input_class }}" name="{{ field.name }}">
+        <label for="id_{% if field.id %}{{ field.id }}{% else %}email{% endif %}">{% if field.label %}{{ field.label}}{% else %}Email{% endif %}</label>
+    </div>
+{% endif %}

@@ -1,0 +1,19 @@
+{
+  "name": "effective_dj",
+  "version": "0.1.0",
+  "description": "Just doing the effective django tuts",
+  "main": "NA",
+  "dependencies": {
+    "bootstrap": "^3.3.4",
+    "jquery": "^2.1.4",
+    "materialize-css": "^0.96.1"
+  },
+  "devDependencies": {
+    "karma": "^0.12.31"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ben Hunter",
+  "license": "ISC"
+}

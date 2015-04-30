@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block header_text %}Create a contact{% endblock %}
+{% block contact_content %}
+    {% crispy form form.helper %}
+    <h3><a href="{% url 'contacts' %}">Back to list</a></h3>
+{% endblock %}
+{% block column_2 %}
+{% endblock %}

@@ -1,0 +1,82 @@
+{% load staticfiles crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <title>Sweet address book</title>
+        <link href="{% static 'css/materialize.min.css' %}" rel="stylesheet">
+        <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <div class='row'>
+                <div class='col s4 offset-s2'>
+                    <h2 style='padding-bottom:10px'>{% block header_text %}Contacts{% endblock %}</h2>
+                    {% block contact_content %}
+                    <ul>
+                    {% for contact in object_list %}
+                        <li>{{ contact|title }}</li>
+                    {% endfor %}
+                    </ul>
+                    {% endblock %}
+                </div>
+                {% block column_2 %}
+                <div class="col s4">
+                    <h2 style='padding-bottom:10px'>Add contact</h2>
+                    {% crispy form form.helper %}
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+        <script src="{% static 'jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/materialize.min.js' %}"></script>
+        <script>
+        window.onload = function() {
+            $('select').material_select();
+        };
+        </script>
+{% block bottom_js %}
+
+<script>
+var example_form = '#add-contact';
+
+$(example_form).on('submit',function(event) {
+    event.preventDefault();
+    $.ajax({
+        url: "{% url 'create-contact' %}",
+        type: "POST",
+        data: $(example_form).serialize(),
+        dataType: 'json',
+        success: function(data) {
+            if (!(data['success'])) {
+                // if form isn't valid, keep form in there and add error dialogues
+                console.log(data);
+                var keys = Object.keys(data.form_errors);
+                keys.map(function(k) {
+                    var el = example_form + " input[name=" + k + "]"
+                    $(el).addClass('invalid');
+                    $(el)[0].setAttribute('data-tooltip',
+                            data.form_errors[k]);
+                    $(el)[0].setAttribute('data-position', 'left');
+                });
+                $('input[data-position=left]').tooltip({delay: 50});
+            }
+            else {
+                // if form validates, repopulate with empty form
+                $(example_form).replaceWith(data['form_html']);
+                $('select').material_select();
+            }
+        },
+        error: function (data){ 
+            console.error(data);
+        }
+    });
+});
+</script>
+{% endblock %}
+    </body>
+</html>
+
