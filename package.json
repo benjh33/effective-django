@@ -5,7 +5,7 @@
   "main": "NA",
   "dependencies": {
     "bootstrap": "^3.3.4",
-    "jquery": "^2.1.4",
+    "jquery": "^3.5.0",
     "materialize-css": "^0.96.1"
   },
   "devDependencies": {
